@@ -41,3 +41,38 @@ knn = KNeighborsClassifier(n_neighbors=3)
 knn.fit(x_train_scaled, y_train)
 accuracy = knn.score(x_test_scaled, y_test)
 print("\nAcuratetea modelului KNN: ", accuracy)
+
+#ex 5
+
+for k in k_values:
+    knn = KNeighborsClassifier(n_neighbors=k)
+    knn.fit(x_train_scaled, y_train)
+    
+    score = knn.score(x_test_scaled, y_test)
+    accuracies.append(score)
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(k_values, accuracies, marker='o', linestyle='--', color='b')
+    plt.title('Influenta valorii K asupra acuratetei')
+    plt.xlabel('Valoarea lui K')
+    plt.ylabel('Acuratete')
+    plt.grid(True)
+    plt.show()
+
+    from sklearn.metrics import classification_report, confusion_matrix
+    import seaborn as sns
+
+    conf_mtrix = confusion_matrix(y_test, y_pred)
+
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(conf_mtrix, annot=True, fmt='d', cmap='
+Blues', xticklabels=iris.target_names, yticklabels=iris.target_names)
+    plt.title('Matricea de confuzie')
+    plt.xlabel('Predictie(Ce a crezut modelul)')
+    plt.ylabel('Realitate(Ce era de fapt)')
+    plt.show()
+
+report = classification_report(y_test, y_pred, target_names=iris.target_names)
+print("\nRaport de clasificare:")
+print(report)
+import numpy as np
